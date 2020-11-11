@@ -19,7 +19,9 @@ import {
     List,
     NumberField,
     ReferenceArrayField,
+    ReferenceInput,
     SearchInput,
+    SelectInput,
     ShowButton,
     SimpleList,
     SingleFieldList,
@@ -45,6 +47,21 @@ const QuickFilter = ({ label }) => {
 const PostFilter = props => (
     <Filter {...props}>
         <SearchInput source="q" alwaysOn />
+
+        <ReferenceInput
+            label="Post"
+            source="id"
+            reference="posts"
+            sort={{ field: 'title', order: 'ASC' }}
+            alwaysOn
+        >
+            <SelectInput optionText="title" translateChoice={false} />
+        </ReferenceInput>
+
+        <TextInput
+            source="tag"
+            defaultValue="Qui tempore rerum et voluptates"
+        />
         <TextInput
             source="title"
             defaultValue="Qui tempore rerum et voluptates"
@@ -128,7 +145,7 @@ const PostList = props => {
             {...props}
             bulkActionButtons={<PostListBulkActions />}
             filters={<PostFilter />}
-            sort={{ field: 'published_at', order: 'DESC' }}
+            sort={{ field: 'title', order: 'ASC' }}
             exporter={exporter}
         >
             {isSmall ? (
